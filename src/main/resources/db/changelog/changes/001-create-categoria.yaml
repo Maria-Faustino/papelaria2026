@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-01-create-categoria
+      author: maria-papelaria
+      comment: Cria a tabela que classifica os produtos da papelaria.
+      changes:
+        - createTable:
+            tableName: categoria
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_categoria
+                    nullable: false
+              - column:
+                  name: nome
+                  type: VARCHAR(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable:
+            tableName: categoria
+
+  - changeSet:
+      id: 001-02-check-status-categoria
+      author: maria-papelaria
+      comment: Restringe o status aos valores definidos no enum Java.
+      changes:
+        - sql:
+            sql: >
+              ALTER TABLE categoria
+              ADD CONSTRAINT ck_categoria_status
+              CHECK (status IN ('ATIVO', 'INATIVO'))
+      rollback:
+        - sql:
+            sql: >
+              ALTER TABLE categoria
+              DROP CONSTRAINT ck_categoria_status

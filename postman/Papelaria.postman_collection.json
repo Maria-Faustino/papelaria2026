@@ -1,0 +1,316 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-papelaria0001",
+    "name": "Papelaria API",
+    "description": "Collection pronta para a API de estoque da papelaria.\n\nOrdem sugerida:\n1. Health\n2. Cadastrar Categoria\n3. Cadastrar Fornecedor\n4. Cadastrar Produto\n5. Listagens e buscas por ID\n\nOs POSTs gravam automaticamente `categoriaId`, `fornecedorId` e `produtoId` nas variáveis da collection.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "categoriaId",
+      "value": "1"
+    },
+    {
+      "key": "fornecedorId",
+      "value": "1"
+    },
+    {
+      "key": "produtoId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health"]
+            },
+            "description": "Confirma se a API está no ar. Resposta esperada: OK"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Categorias",
+      "item": [
+        {
+          "name": "POST Cadastrar Categoria",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    if (body.id) {",
+                  "        pm.collectionVariables.set('categoriaId', String(body.id));",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Escolar\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/categorias",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "categorias"]
+            },
+            "description": "Cadastra uma categoria e salva o id em {{categoriaId}}."
+          },
+          "response": []
+        },
+        {
+          "name": "GET Listar Categorias",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/categorias",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "categorias"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Buscar Categoria por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/categorias/{{categoriaId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "categorias", "{{categoriaId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fornecedores",
+      "item": [
+        {
+          "name": "POST Cadastrar Fornecedor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    if (body.id) {",
+                  "        pm.collectionVariables.set('fornecedorId', String(body.id));",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"razaoSocial\": \"Tilibra Papelaria Ltda\",\n  \"cnpj\": \"12345678000190\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/fornecedores",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "fornecedores"]
+            },
+            "description": "CNPJ deve ter exatamente 14 dígitos. Salva o id em {{fornecedorId}}."
+          },
+          "response": []
+        },
+        {
+          "name": "GET Listar Fornecedores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/fornecedores",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "fornecedores"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Buscar Fornecedor por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/fornecedores/{{fornecedorId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "fornecedores", "{{fornecedorId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Produtos",
+      "item": [
+        {
+          "name": "POST Cadastrar Produto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    if (body.id) {",
+                  "        pm.collectionVariables.set('produtoId', String(body.id));",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigoBarras\": \"7890000000001\",\n  \"descricao\": \"Caderno universitário 10 matérias\",\n  \"saldoEstoque\": 20,\n  \"valorUnitario\": 18.90,\n  \"estoqueMinimo\": 5,\n  \"categoriaId\": {{categoriaId}},\n  \"fornecedorId\": {{fornecedorId}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produtos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "produtos"]
+            },
+            "description": "Use depois de cadastrar categoria e fornecedor. Os IDs vêm das variáveis da collection."
+          },
+          "response": []
+        },
+        {
+          "name": "POST Cadastrar Produto sem Fornecedor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    if (body.id) {",
+                  "        pm.collectionVariables.set('produtoId', String(body.id));",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigoBarras\": \"7890000000002\",\n  \"descricao\": \"Caneta esferográfica azul\",\n  \"saldoEstoque\": 100,\n  \"valorUnitario\": 2.50,\n  \"estoqueMinimo\": 10,\n  \"categoriaId\": {{categoriaId}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/produtos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "produtos"]
+            },
+            "description": "Fornecedor é opcional."
+          },
+          "response": []
+        },
+        {
+          "name": "GET Listar Produtos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produtos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "produtos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Buscar Produto por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/produtos/{{produtoId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "produtos", "{{produtoId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
